@@ -1,0 +1,130 @@
+{
+  "entities": {
+    "Dataset": {
+      "title": "Dataset",
+      "description": "An uploaded or sample Excel dataset summary and analytical profile synchronized to the cloud.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the dataset owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "File or dataset name.",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "sheetName": {
+          "type": "string",
+          "description": "Active worksheet name analyzed.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "rowCount": {
+          "type": "integer",
+          "description": "Total number of data rows in the spreadsheet."
+        },
+        "columnCount": {
+          "type": "integer",
+          "description": "Total number of columns in the spreadsheet."
+        },
+        "columnsSummary": {
+          "type": "string",
+          "description": "Structured statistical profile of columns, distributions, and sample rows.",
+          "minLength": 1,
+          "maxLength": 15000
+        },
+        "trendsSummary": {
+          "type": "string",
+          "description": "Executive natural-language trend analysis extracted from the dataset.",
+          "minLength": 0,
+          "maxLength": 15000
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the dataset was first synced."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the dataset was last updated."
+        }
+      },
+      "required": [
+        "ownerId",
+        "name",
+        "sheetName",
+        "rowCount",
+        "columnCount",
+        "columnsSummary",
+        "trendsSummary",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "QueryLog": {
+      "title": "QueryLog",
+      "description": "A natural-language question and analytical response stored under a dataset.",
+      "type": "object",
+      "properties": {
+        "datasetId": {
+          "type": "string",
+          "description": "Parent dataset document ID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user who created the query.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "question": {
+          "type": "string",
+          "description": "Natural language question asked by the user.",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "answer": {
+          "type": "string",
+          "description": "Detailed analytical answer generated from the dataset.",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the query was logged."
+        }
+      },
+      "required": [
+        "datasetId",
+        "ownerId",
+        "question",
+        "answer",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/datasets/{datasetId}": {
+      "schema": {
+        "$ref": "#/entities/Dataset"
+      },
+      "description": "User-owned synchronized Excel dataset profiles and trend summaries."
+    },
+    "/datasets/{datasetId}/queries/{queryId}": {
+      "schema": {
+        "$ref": "#/entities/QueryLog"
+      },
+      "description": "Subcollection of natural-language Q&A logs belonging to a specific dataset."
+    }
+  }
+}

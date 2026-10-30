@@ -1,0 +1,6 @@
+{
+  "name": "YUAI — Spatial Excel & Trend Intelligence",
+  "description": "Analyze massive Excel spreadsheets in natural human language, uncover statistical trends, and synchronize workspaces across devices with a 3D spatial command home screen.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
